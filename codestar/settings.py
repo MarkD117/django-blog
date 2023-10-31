@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'django_summernote',
+    'crispy_forms',
     'blog',
 ]
 
@@ -64,6 +65,9 @@ LOGOUT_REDIRECT_URL = '/'
 
 # User registration allows email field to be empty
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# Telling crispy library to bootstrap4 classes for formatting
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
