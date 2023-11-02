@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
+from django.http import HttpResponseRedirect
 from .models import Post
 from .forms import CommentForm
 
@@ -83,3 +84,19 @@ class PostDetail(View):
                 'comment_form': CommentForm()
             },
         )
+
+class PostLike(View):
+    
+    def post(self, request, slug):
+        post = get_object_or_404(Post, slug=slug)
+
+        # checking to see if the post has already been liked
+        if post.likes.filter(id=request.user.id).exists():
+            # Removes like
+            post.likes.remove(request.user)
+        else:
+            # add like if it does not exists
+            post.likes.add(request.user)
+
+        # liking or unliking a post will reload the post_detail page and update the like
+        return HttpResponseRedirect(reverse('post_detail', args=[slug]))
